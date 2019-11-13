@@ -3,9 +3,9 @@ import glob
 import re
 import pdfkit
 
-q_dirs = fs_files = glob.glob('figs/LAPoll/*')
-df = pd.read_csv('data/sg/LA Poll/la_poll_results_data.csv')
-cb = pd.read_csv('data/sg/LA Poll/la_ky_codebook.csv')
+q_dirs = fs_files = glob.glob('figs/KYPoll/*')
+df = pd.read_csv('data/sg/KY Poll/ky_poll_results_data.csv')
+cb = pd.read_csv('data/sg/KY Poll/la_ky_codebook.csv')
 
 pd.set_option('display.width', 1000)
 pd.set_option('colheader_justify', 'center')
@@ -18,6 +18,7 @@ html_string = '''
   </div>
   <link rel="stylesheet" type="text/css" href="df_style.css"/>
   <body>
+    <br>
   	NB: subgroups with a n-size less than 50 (<50) are not shown on these cross-tabs. We choose not to display N<50 subgroups because the sample is too small to have statistical significance. We did, however, take samples of these subgroups for representational and weighting purposes to accurately reflect the electorate makeup.
   	<br>
   	<br>
@@ -28,7 +29,7 @@ html_string = '''
 
 q_divs = []
 for v in cb["Variable"].unique():
-	d = "figs/LAPoll/" + v
+	d = "figs/KYPoll/" + v
 	base_files = glob.glob(d + '/csv/*base.csv')
 	if len(base_files) == 0:
 		continue
@@ -56,7 +57,7 @@ for v in cb["Variable"].unique():
 
 
 # OUTPUT AN HTML FILE
-with open('reports/html/lapoll.html', 'w') as f:
+with open('reports/html/kypoll.html', 'w') as f:
 	f.write(html_string.format(questions="\n".join(q_divs)))
 
-pdfkit.from_file('reports/html/lapoll.html', 'reports/pdf/lapoll.pdf')
+pdfkit.from_file('reports/html/kypoll.html', 'reports/pdf/kypoll.pdf')
