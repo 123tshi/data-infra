@@ -36,7 +36,7 @@ for v in cb["Variable"].unique():
 	base_file = base_files[0]
 	fs_files = glob.glob(d + '/csv/*fs.csv')
 	tab = pd.read_csv(base_file)
-	if tab.sum(numeric_only=True)[0] < 95 or tab.shape[0] > 20:
+	if tab.sum(numeric_only=True)[0] < 75 or tab.shape[0] > 20:
 		continue
 	fs_files.sort()
 	for f in fs_files:
@@ -46,7 +46,7 @@ for v in cb["Variable"].unique():
 		label, index, value = xtab.columns
 		tab = tab.join(xtab.pivot(index=index, columns=label)[value], on=index)
 
-	if index == "sean_medicaid_expand_know":
+	if index == "sean_medicaid_expand_know" or index == "potus_vote_post_election_2012":
 		continue
 	wording = re.sub(r" ?\<[^>]+\>", " ", cb[cb["Variable"] == index]["Full"].iloc[0])
 	# tab = tab.append(tab.sum(numeric_only=True), ignore_index=True)
@@ -58,6 +58,6 @@ for v in cb["Variable"].unique():
 
 # OUTPUT AN HTML FILE
 with open('reports/html/kypoll.html', 'w') as f:
-	f.write(html_string.format(questions="\n".join(q_divs)))
+	f.write(html_string.format(questions="\n".join(q_divs)).replace("${q://QID497/ChoiceGroup/SelectedChoices}", "Kentucky"))
 
 pdfkit.from_file('reports/html/kypoll.html', 'reports/pdf/kypoll.pdf')

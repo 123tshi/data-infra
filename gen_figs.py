@@ -7,7 +7,7 @@ import questions.categorical
 # import questions.multiple_response
 
 fig_path = "figs"
-data_dir = "sg"
+data_dir = "data/sg"
 
 
 def gen_figs(survey_path, survey_name=""):

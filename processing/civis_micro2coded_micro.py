@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-cb = pd.read_csv("sg/LA Poll/la_ky_codebook.csv")
-df = pd.read_csv("sg/VITMS_ LA Gov Run Off - 11-12-19.csv")
+cb = pd.read_csv("data/sg/LA Poll/la_ky_codebook.csv")
+df = pd.read_csv("data/sg/ky_poll_20191114.csv")
 
 
 cbc = cb[(cb["Type"] == "categorical") | (cb["Type"] == "categorical_array")]
@@ -16,4 +16,4 @@ for variable in all_vars:
         print(e)
 
 
-df.to_csv("sg/LA Poll/la_poll_results_data.csv", index=False, na_rep="")
+df.to_csv("data/sg/LA Poll/la_poll_results_data.csv", index=False, na_rep="")
